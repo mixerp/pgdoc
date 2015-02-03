@@ -3,9 +3,9 @@
 PgDoc creates beautiful database documentations from your PostgreSQL database. It is a small console application that runs
 on:
 
-* Windows 7/8
-* Mac OSX Yosemite
-* Ubuntu 14
+* Windows
+* Mac OSX
+* Linux
 
 ![PgDoc Screenshot](https://raw.githubusercontent.com/mixerp/pgdoc/master/assets/images/pg-doc.png)
 
