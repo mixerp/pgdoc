@@ -47,7 +47,6 @@ MixERP.Net.Utilities.PgDoc.exe -s=[server] -d=[database] -u=[pg_user] -p=[pwd] -
 Example:
 ```
 MixERP.Net.Utilities.PgDoc.exe -s=localhost -d=mixerp -u=postgres -p=secret -o="c:\mixerp-doc"
-
 ```
 
 **OSX & Linux**
