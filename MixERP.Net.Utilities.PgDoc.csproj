@@ -1,0 +1,232 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{3303018A-6D8E-4E51-931F-5BC24F316E6A}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MixERP.Net.Utilities.PgDoc</RootNamespace>
+    <AssemblyName>MixERP.Net.Utilities.PgDoc</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+    <Externalconsole>true</Externalconsole>
+    <Commandlineparameters>-s=localhost -d=mixerp -u=postgres -p=binod -o=/users/binod/desktop/docs/</Commandlineparameters>
+    <CodeAnalysisRuleSet>BasicCorrectnessRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>postgresql.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="HtmlAgilityPack, Version=1.4.9.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Dependencies\HTMLAgilityPack\HtmlAgilityPack.dll</HintPath>
+    </Reference>
+    <Reference Include="MixERP.Net.Common">
+      <HintPath>Dependencies\MixERP\MixERP.Net.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Security, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Dependencies\Npgsql\Mono.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Npgsql, Version=2.2.3.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Dependencies\Npgsql\Npgsql.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Processors\CheckConstraintProcessor.cs" />
+    <Compile Include="Processors\ColumnProcessor.cs" />
+    <Compile Include="Processors\ConnectionTester.cs" />
+    <Compile Include="Processors\DbProcessor.cs" />
+    <Compile Include="Processors\FunctionProcessor.cs" />
+    <Compile Include="Processors\IndexProcessor.cs" />
+    <Compile Include="Processors\MaterializedViewProcessor.cs" />
+    <Compile Include="Processors\SchemaProcessor.cs" />
+    <Compile Include="Processors\SequenceProcessor.cs" />
+    <Compile Include="Processors\TableProcessor.cs" />
+    <Compile Include="Processors\TableTriggerProcessor.cs" />
+    <Compile Include="Processors\TriggerFunctionProcessor.cs" />
+    <Compile Include="Processors\TypeProcessor.cs" />
+    <Compile Include="Processors\ViewProcessor.cs" />
+    <Compile Include="DbFactory\DBConnection.cs" />
+    <Compile Include="DbFactory\DbOperation.cs" />
+    <Compile Include="Generators\AssetRunner.cs" />
+    <Compile Include="Generators\DBRunner.cs" />
+    <Compile Include="Generators\FunctionRunner.cs" />
+    <Compile Include="Generators\FunctionsRunner.cs" />
+    <Compile Include="Generators\MaterializedViewRunner.cs" />
+    <Compile Include="Generators\MaterializedViewsRunner.cs" />
+    <Compile Include="Generators\Runner.cs" />
+    <Compile Include="Generators\SchemaRunner.cs" />
+    <Compile Include="Generators\SchemasRunner.cs" />
+    <Compile Include="Generators\SequencesRunner.cs" />
+    <Compile Include="Generators\TableRunner.cs" />
+    <Compile Include="Generators\TablesRunner.cs" />
+    <Compile Include="Generators\TriggersRunner.cs" />
+    <Compile Include="Generators\TypeRunner.cs" />
+    <Compile Include="Generators\TypesRunner.cs" />
+    <Compile Include="Generators\ViewRunner.cs" />
+    <Compile Include="Generators\ViewsRunner.cs" />
+    <Compile Include="Helpers\ConfigurationHelper.cs" />
+    <Compile Include="Helpers\DependencyHandler.cs" />
+    <Compile Include="Helpers\ExtensionMethods.cs" />
+    <Compile Include="Helpers\FileHelper.cs" />
+    <Compile Include="Helpers\DisqusHelper.cs" />
+    <Compile Include="Helpers\HtmlHelper.cs" />
+    <Compile Include="Models\PgCheckConstraint.cs" />
+    <Compile Include="Models\PgColumn.cs" />
+    <Compile Include="Models\PGDatabase.cs" />
+    <Compile Include="Models\PgFunction.cs" />
+    <Compile Include="Models\PgIndex.cs" />
+    <Compile Include="Models\PgMaterializedView.cs" />
+    <Compile Include="Models\PgSchema.cs" />
+    <Compile Include="Models\PGSchemas.cs" />
+    <Compile Include="Models\PgSequence.cs" />
+    <Compile Include="Models\PgTable.cs" />
+    <Compile Include="Models\PgTableTrigger.cs" />
+    <Compile Include="Models\PgType.cs" />
+    <Compile Include="Models\PgView.cs" />
+    <Compile Include="Parsers\ArgumentParser.cs" />
+    <Compile Include="Parsers\CheckConstraintParser.cs" />
+    <Compile Include="Parsers\ColumnParser.cs" />
+    <Compile Include="Parsers\DefaultParser.cs" />
+    <Compile Include="Parsers\ForeignKeyParser.cs" />
+    <Compile Include="Parsers\FunctionParser.cs" />
+    <Compile Include="Parsers\IndexParser.cs" />
+    <Compile Include="Parsers\MaterializedViewParser.cs" />
+    <Compile Include="Parsers\SchemaParser.cs" />
+    <Compile Include="Parsers\SequenceParser.cs" />
+    <Compile Include="Parsers\TableParser.cs" />
+    <Compile Include="Parsers\TriggerParser.cs" />
+    <Compile Include="Parsers\TypeParser.cs" />
+    <Compile Include="Parsers\ViewParser.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Configs\Template\index.html" />
+    <EmbeddedResource Include="Configs\Template\function.html" />
+    <EmbeddedResource Include="Configs\Template\functions.html" />
+    <EmbeddedResource Include="Configs\Template\materialized-view.html" />
+    <EmbeddedResource Include="Configs\Template\materialized-views.html" />
+    <EmbeddedResource Include="Configs\Template\schema.html" />
+    <EmbeddedResource Include="Configs\Template\schemas.html" />
+    <EmbeddedResource Include="Configs\Template\sequences.html" />
+    <EmbeddedResource Include="Configs\Template\table.html" />
+    <EmbeddedResource Include="Configs\Template\tables.html" />
+    <EmbeddedResource Include="Configs\Template\triggers.html" />
+    <EmbeddedResource Include="Configs\Template\type.html" />
+    <EmbeddedResource Include="Configs\Template\types.html" />
+    <EmbeddedResource Include="Configs\Template\view.html" />
+    <EmbeddedResource Include="Configs\Template\views.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Dependencies\HTMLAgilityPack\HtmlAgilityPack.dll" />
+    <EmbeddedResource Include="Dependencies\HTMLAgilityPack\HtmlAgilityPack.XML" />
+    <EmbeddedResource Include="Dependencies\MixERP\MixERP.Net.Common.dll" />
+    <EmbeddedResource Include="Dependencies\Npgsql\de\Npgsql.resources.dll" />
+    <EmbeddedResource Include="Dependencies\Npgsql\es\Npgsql.resources.dll" />
+    <EmbeddedResource Include="Dependencies\Npgsql\fi\Npgsql.resources.dll" />
+    <EmbeddedResource Include="Dependencies\Npgsql\fr\Npgsql.resources.dll" />
+    <EmbeddedResource Include="Dependencies\Npgsql\ja\Npgsql.resources.dll" />
+    <EmbeddedResource Include="Dependencies\Npgsql\Mono.Security.dll" />
+    <EmbeddedResource Include="Dependencies\Npgsql\Npgsql.dll" />
+    <EmbeddedResource Include="Dependencies\Npgsql\Npgsql.xml" />
+    <EmbeddedResource Include="Dependencies\Npgsql\zh-CN\Npgsql.resources.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <EmbeddedResource Include="Configs\Template\Stylesheets\themes\default\assets\fonts\icons.eot" />
+    <EmbeddedResource Include="Configs\Template\Stylesheets\themes\default\assets\fonts\icons.otf" />
+    <EmbeddedResource Include="Configs\Template\Stylesheets\themes\default\assets\fonts\icons.ttf" />
+    <EmbeddedResource Include="Configs\Template\Stylesheets\themes\default\assets\fonts\icons.woff" />
+    <None Include="PgDoc.licenseheader" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Configs\Template\Scripts\prism.min.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Configs\Template\Scripts\jquery.min.js" />
+    <EmbeddedResource Include="Configs\Template\Stylesheets\semantic.min.css" />
+    <EmbeddedResource Include="Configs\Template\Scripts\semantic.min.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Configs\Template\Stylesheets\prism.min.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Configs\Template\Stylesheets\mixerp.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Configs\Template\Stylesheets\themes\default\assets\fonts\icons.svg" />
+    <EmbeddedResource Include="Configs\Template\Stylesheets\themes\default\assets\images\flags.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="LICENSE" />
+    <EmbeddedResource Include="Configs\SQL\empty.sql" />
+    <EmbeddedResource Include="Configs\SQL\columns.sql" />
+    <EmbeddedResource Include="Configs\SQL\check-constraints.sql" />
+    <EmbeddedResource Include="Configs\SQL\indices.sql" />
+    <EmbeddedResource Include="Configs\SQL\table-triggers.sql" />
+    <EmbeddedResource Include="Configs\SQL\db.sql" />
+    <EmbeddedResource Include="Configs\SQL\functions-by-schema.sql" />
+    <EmbeddedResource Include="Configs\SQL\functions.sql" />
+    <EmbeddedResource Include="Configs\SQL\materialized-views-by-schema.sql" />
+    <EmbeddedResource Include="Configs\SQL\materialized-views.sql" />
+    <EmbeddedResource Include="Configs\SQL\schemas.sql" />
+    <EmbeddedResource Include="Configs\SQL\schema.sql" />
+    <EmbeddedResource Include="Configs\SQL\sequences.sql" />
+    <EmbeddedResource Include="Configs\SQL\sequences-by-schema.sql" />
+    <EmbeddedResource Include="Configs\SQL\tables.sql" />
+    <EmbeddedResource Include="Configs\SQL\tables-by-schema.sql" />
+    <EmbeddedResource Include="Configs\SQL\trigger-functions-by-schema.sql" />
+    <EmbeddedResource Include="Configs\SQL\trigger-functions.sql" />
+    <EmbeddedResource Include="Configs\SQL\pg_catalog.pg_get_typedef.sql" />
+    <EmbeddedResource Include="Configs\SQL\types-by-schema.sql" />
+    <EmbeddedResource Include="Configs\SQL\types.sql" />
+    <EmbeddedResource Include="Configs\SQL\views.sql" />
+    <EmbeddedResource Include="Configs\SQL\views-by-schema.sql" />
+    <Content Include="Dependencies\postgresql.ico" />
+    <Content Include="postgresql.ico" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
