@@ -45,14 +45,11 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Dependencies\HTMLAgilityPack\HtmlAgilityPack.dll</HintPath>
     </Reference>
-    <Reference Include="MixERP.Net.Common">
-      <HintPath>Dependencies\MixERP\MixERP.Net.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="Mono.Security, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+    <Reference Include="Mono.Security, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Dependencies\Npgsql\Mono.Security.dll</HintPath>
     </Reference>
-    <Reference Include="Npgsql, Version=2.2.3.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL">
+    <Reference Include="Npgsql, Version=2.1.0.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Dependencies\Npgsql\Npgsql.dll</HintPath>
     </Reference>
@@ -67,6 +64,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Conversion.cs" />
     <Compile Include="Processors\CheckConstraintProcessor.cs" />
     <Compile Include="Processors\ColumnProcessor.cs" />
     <Compile Include="Processors\ConnectionTester.cs" />
@@ -156,7 +154,6 @@
   <ItemGroup>
     <EmbeddedResource Include="Dependencies\HTMLAgilityPack\HtmlAgilityPack.dll" />
     <EmbeddedResource Include="Dependencies\HTMLAgilityPack\HtmlAgilityPack.XML" />
-    <EmbeddedResource Include="Dependencies\MixERP\MixERP.Net.Common.dll" />
     <EmbeddedResource Include="Dependencies\Npgsql\de\Npgsql.resources.dll" />
     <EmbeddedResource Include="Dependencies\Npgsql\es\Npgsql.resources.dll" />
     <EmbeddedResource Include="Dependencies\Npgsql\fi\Npgsql.resources.dll" />

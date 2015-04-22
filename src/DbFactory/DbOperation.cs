@@ -23,7 +23,6 @@ using System.Data;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using System.Threading;
-using MixERP.Net.Common.Helpers;
 using Npgsql;
 
 namespace MixERP.Net.Utilities.PgDoc.DBFactory
@@ -224,8 +223,7 @@ namespace MixERP.Net.Utilities.PgDoc.DBFactory
 
                 if (!match)
                 {
-                    throw new InvalidOperationException(string.Format(LocalizationHelper.GetCurrentCulture(),
-                        "Invalid parameter name '{0}'.", npgsqlParameter.ParameterName));
+                    throw new InvalidOperationException(string.Format("Invalid parameter name '{0}'.", npgsqlParameter.ParameterName));
                 }
             }
 
