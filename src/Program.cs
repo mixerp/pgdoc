@@ -19,6 +19,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using MixERP.Net.Utilities.PgDoc.Generators;
 using MixERP.Net.Utilities.PgDoc.Helpers;
@@ -28,15 +29,20 @@ namespace MixERP.Net.Utilities.PgDoc
 {
     internal class Program
     {
-        internal static string AppName;
+        internal static readonly string AppName = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name;
+
         internal static string Database;
+		internal static int Port;
+		internal static string UserId;
+		internal static string Password;
+		internal static string Server;
+
         internal static string DisqusName;
         internal static bool DeleteFilesBeforePublish;
         internal static string OutputDirectory;
-        internal static string Password;
-        internal static string Server;
-        internal static string UserId;
-
+		internal static string SchemaPattern = ".*"; // Regex-Pattern for schemas to include
+		internal static string xSchemaPattern = string.Empty; // Regex-Pattern for schemas to exclude
+		
         internal static void Build(string[] args)
         {
             foreach (string argument in args)
@@ -44,6 +50,7 @@ namespace MixERP.Net.Utilities.PgDoc
                 if (argument.StartsWith("-s"))
                 {
                     Server = ArgumentParser.Parse(argument, "-s");
+					ExtractPort();
                 }
 
                 if (argument.StartsWith("-d"))
@@ -70,6 +77,14 @@ namespace MixERP.Net.Utilities.PgDoc
                 {
                     DisqusName = ArgumentParser.Parse(argument, "-q");
                 }
+
+				// kwrl: is == include schemata; format: "-is=RegExpPattern" sample: "-is=(public|def.*)
+				if (argument.StartsWith("-is")) {
+					SchemaPattern = ArgumentParser.Parse(argument, "-is");
+				}
+				if (argument.StartsWith("-xs")) {
+					xSchemaPattern = ArgumentParser.Parse(argument, "-xs");
+				}
 
                 if (!argument.StartsWith("-f")) continue;
 
@@ -171,25 +186,29 @@ namespace MixERP.Net.Utilities.PgDoc
 
             string result = Console.ReadLine();
 
-            string[] yes = {"Y", "YES", "OK", "OKAY"};
-
-            return result == null || yes.Contains(result.ToUpperInvariant());
+            return result == null || new string[]{"Y", "YES", "OK", "OKAY"}.Contains(result.ToUpperInvariant());
         }
+
+		private static void ExtractPort() {
+			// if there's a colon, I will extract the port
+			var ServerParts = Server.Split(':');
+			Server = ServerParts[0];
+			if (ServerParts.Length == 1 || !int.TryParse(ServerParts[1], out Port)) {
+				Port = 5432;
+			}
+		}
 
         private static void DisplayHelpInfo()
         {
             Console.WriteLine("Generates HTML documentation from PostgreSQL database.");
             Console.WriteLine();
-            Console.WriteLine("Usage: {0} -s=[server] -d=[database] -u=[pg_user] -p=[pwd] -o=[output_dir]",
-                AppName.ToLower());
+            Console.WriteLine("Usage: {0} -s=[server[:port]] -d=[database] -u=[pg_user] -p=[pwd] -o=[output_dir]", AppName);
             Console.WriteLine();
 
             Console.WriteLine("WARNING: No parameter supplied.");
             Console.WriteLine();
 
-            bool result = WriteQuestion("Would you like to provide parameters now? [Yes/No*]");
-
-            if (!result)
+            if (!WriteQuestion("Would you like to provide parameters now? [Yes/No*]"))
             {
                 Console.WriteLine();
                 Console.WriteLine("No");
@@ -200,6 +219,8 @@ namespace MixERP.Net.Utilities.PgDoc
             Console.WriteLine();
             Console.WriteLine("Yes");
             Server = GetParameter("PostgreSQL Server host name or IP address:", "localhost");
+			ExtractPort();
+
             Database = GetParameter("Enter the name of your PostgreSQL Database:", "mixerp");
             UserId = GetParameter("Enter PostgreSQL Database UserId:", "postgres");
             Password = GetPassword();
@@ -248,7 +269,7 @@ namespace MixERP.Net.Utilities.PgDoc
         private static void Main(string[] args)
         {
             AppDomain.CurrentDomain.AssemblyResolve += DependencyHandler.ResolveEventHandler;
-            AppName = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name;
+			//AppName = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name;
 
             if ((args.Length.Equals(0)) ||
                 args.Length.Equals(1) && (args[0].Contains("/?") || args[0].Contains("--help")))

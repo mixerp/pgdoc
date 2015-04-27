@@ -43,7 +43,7 @@ namespace MixERP.Net.Utilities.PgDoc.Generators
 
         private static void BuildDocumentation(string content, List<string> matches)
         {
-            ICollection<PgFunction> triggers = TriggerFunctionProcessor.GetTriggerFunctions();
+			ICollection<PgFunction> triggers = TriggerFunctionProcessor.GetTriggerFunctions(Program.SchemaPattern);
 
             content = content.Replace("[DBName]", Program.Database.ToUpperInvariant());
 

@@ -21,6 +21,7 @@ INNER JOIN pg_roles ON pg_roles.oid = pg_class.relowner
 INNER JOIN pg_namespace ON pg_namespace.oid = pg_class.relnamespace
 LEFT JOIN pg_tablespace ON pg_class.reltablespace = pg_tablespace.oid
 LEFT JOIN pg_description ON pg_description.objoid = pg_class.oid
-WHERE pg_namespace.nspname = @SchemaName
+WHERE pg_namespace.nspname similar to @SchemaPattern
+AND pg_namespace.nspname not similar to @xSchemaPattern
 AND pg_class.relkind = 'm'
-ORDER BY pg_class.relname;
+ORDER BY pg_namespace.nspname, pg_class.relname;

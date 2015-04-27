@@ -43,7 +43,7 @@ namespace MixERP.Net.Utilities.PgDoc.Generators
 
         private static void BuildDocumentation(string content, List<string> matches)
         {
-            ICollection<PgSequence> sequences = SequenceProcessor.GetSequences();
+			ICollection<PgSequence> sequences = SequenceProcessor.GetSequences(Program.SchemaPattern, Program.xSchemaPattern);
 
             content = content.Replace("[DBName]", Program.Database.ToUpperInvariant());
             content = Parsers.SequenceParser.Parse(content, matches, sequences);

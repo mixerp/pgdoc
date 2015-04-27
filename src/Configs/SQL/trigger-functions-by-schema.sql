@@ -22,7 +22,8 @@ LEFT JOIN pg_catalog.pg_namespace n
 ON n.oid = p.pronamespace
 LEFT JOIN pg_description d
 ON p.oid = d.objoid
-WHERE n.nspname = @SchemaName
+WHERE n.nspname similar to @SchemaPattern
+AND n.nspname not similar to @xSchemaPattern
 AND pg_language.lanname NOT IN ('c','internal') 
 AND p.prorettype = 'pg_catalog.trigger'::pg_catalog.regtype 
-ORDER BY proname;
+ORDER BY n.nspname, proname;
