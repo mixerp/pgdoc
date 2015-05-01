@@ -29,9 +29,9 @@ namespace MixERP.Net.Utilities.PgDoc.Parsers
                 return string.Empty;
             }
 
-            if (argument.StartsWith(argumentName, StringComparison.OrdinalIgnoreCase) && argument.Contains("="))
+			if (argument.StartsWith(argumentName, StringComparison.OrdinalIgnoreCase) && argument[argumentName.Length] == '=')
             {
-                return argument.Replace(argumentName, string.Empty).Replace("=", string.Empty);
+				return argument.Substring(argumentName.Length + 1);
             }
 
             return string.Empty;

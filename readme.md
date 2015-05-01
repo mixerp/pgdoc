@@ -37,16 +37,16 @@ Link to PgDoc for Mono:
 ---
 
 #Documentation
-##Syntax
+##Basic Syntax
 
 **Windows**
 ```
-MixERP.Net.Utilities.PgDoc.exe -s=[server] -d=[database] -u=[pg_user] -p=[pwd] -o=[output_dir]
+MixERP.Net.Utilities.PgDoc.exe -s=[server[:port]] -d=[database] -u=[pg_user] -p=[pwd] -o=[output_dir]
 ```
 
 Example:
 ```
-MixERP.Net.Utilities.PgDoc.exe -s=localhost -d=mixerp -u=postgres -p=secret -o="c:\mixerp-doc"
+MixERP.Net.Utilities.PgDoc.exe -s=localhost:17000 -d=mixerp -u=postgres -p=secret -o="c:\mixerp-doc"
 ```
 
 **OSX & Linux**
@@ -59,4 +59,20 @@ Example
 
 ```
 mono /users/nirvan/desktop/pg-doc/MixERP.Net.Utilities.PgDoc.exe -s=localhost -d=mixerp -u=postgres -p=secret -o=/users/nirvan/desktop/db-doc
+```
+
+##Additional parameters
+**-is: include schema**
+
+Use a postgres regular expression to decide, which schemas should be documented. 
+If you are not familiar with regular expressions, just create a list, using pipe (``|``) as separator.
+```
+MixERP.Net.Utilities.PgDoc.exe ... -is=schema1|schema2
+```
+
+**-xs: exclude schema**
+
+Use a postgres regular expression to decide, which schemas should **not** be documented. You can use ``-is`` and ``-xs`` in combination
+```
+MixERP.Net.Utilities.PgDoc.exe ... -xs=tmp_.*
 ```

@@ -27,7 +27,7 @@ namespace MixERP.Net.Utilities.PgDoc.Processors
 {
     internal static class MaterializedViewProcessor
     {
-        internal static Collection<PgMaterializedView> GetMaterializedViews(string schemaName)
+		internal static Collection<PgMaterializedView> GetMaterializedViews(string schemaPattern = ".*", string xSchemaPattern = "")
         {
             Collection<PgMaterializedView> materializedViews = new Collection<PgMaterializedView>();
 
@@ -35,43 +35,9 @@ namespace MixERP.Net.Utilities.PgDoc.Processors
 
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
-                command.Parameters.AddWithValue("@SchemaName", schemaName);
-                using (DataTable table = DbOperation.GetDataTable(command))
-                {
-                    if (table.Rows.Count > 0)
-                    {
-                        foreach (DataRow row in table.Rows)
-                        {
-                            PgMaterializedView materializedView = new PgMaterializedView
-                            {
-                                RowNumber = Conversion.TryCastLong(row["row_number"]),
-                                Name = Conversion.TryCastString(row["object_name"]),
-                                SchemaName = Conversion.TryCastString(row["object_schema"]),
-                                Tablespace = Conversion.TryCastString(row["tablespace"]),
-                                Owner = Conversion.TryCastString(row["owner"]),
-                                Definition = Conversion.TryCastString(row["definition"]),
-                                Description = Conversion.TryCastString(row["description"])
-                            };
-
-
-                            materializedViews.Add(materializedView);
-                        }
-                    }
-                }
-            }
-
-            return materializedViews;
-        }
-
-        internal static Collection<PgMaterializedView> GetMaterializedViews()
-        {
-            Collection<PgMaterializedView> materializedViews = new Collection<PgMaterializedView>();
-
-            string sql = FileHelper.ReadSqlResource("materialized-views.sql");
-
-            using (NpgsqlCommand command = new NpgsqlCommand(sql))
-            {
-                using (DataTable table = DbOperation.GetDataTable(command))
+				command.Parameters.AddWithValue("@SchemaPattern", schemaPattern);
+				command.Parameters.AddWithValue("@xSchemaPattern", xSchemaPattern);
+				using (DataTable table = DbOperation.GetDataTable(command))
                 {
                     if (table.Rows.Count > 0)
                     {

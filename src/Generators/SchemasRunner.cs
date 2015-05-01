@@ -45,7 +45,7 @@ namespace MixERP.Net.Utilities.PgDoc.Generators
 
         private static void BuildDocumentation(string content, List<string> matches)
         {
-            Collection<PGSchema> schemas = SchemaProcessor.GetSchemas();
+            Collection<PGSchema> schemas = SchemaProcessor.GetSchemas(Program.SchemaPattern, Program.xSchemaPattern);
 
             content = content.Replace("[DBName]", Program.Database.ToUpperInvariant());
             content = Parsers.SchemaParser.Parse(content, matches, schemas);

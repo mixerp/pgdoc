@@ -27,24 +27,15 @@ namespace MixERP.Net.Utilities.PgDoc.Processors
 {
     internal static class TableProcessor
     {
-        internal static Collection<PgTable> GetTables()
-        {
-            string sql = FileHelper.ReadSqlResource("tables.sql");
-
-            using (NpgsqlCommand command = new NpgsqlCommand(sql))
-            {
-                return GetTables(DbOperation.GetDataTable(command));
-            }
-        }
-
-        internal static Collection<PgTable> GetTables(string schemaName)
+		internal static Collection<PgTable> GetTables(string schemaPattern = ".*", string xSchemaPattern = "")
         {
             string sql = FileHelper.ReadSqlResource("tables-by-schema.sql");
 
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
-                command.Parameters.AddWithValue("@SchemaName", schemaName);
-                return GetTables(DbOperation.GetDataTable(command));
+				command.Parameters.AddWithValue("@SchemaPattern", schemaPattern);
+				command.Parameters.AddWithValue("@xSchemaPattern", xSchemaPattern);
+				return GetTables(DbOperation.GetDataTable(command));
             }
         }
 

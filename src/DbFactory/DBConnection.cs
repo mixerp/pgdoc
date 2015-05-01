@@ -28,6 +28,7 @@ namespace MixERP.Net.Utilities.PgDoc.DBFactory
             NpgsqlConnectionStringBuilder connectionStringBuilder = new NpgsqlConnectionStringBuilder
             {
                 Host = Program.Server,
+				Port = Program.Port,
                 Database = Program.Database,
                 UserName = Program.UserId,
                 Password = Program.Password

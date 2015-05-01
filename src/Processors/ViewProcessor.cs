@@ -27,7 +27,7 @@ namespace MixERP.Net.Utilities.PgDoc.Processors
 {
     internal static class ViewProcessor
     {
-        internal static Collection<PgView> GetViews(string schemaName)
+		internal static Collection<PgView> GetViews(string schemaPattern = ".*", string xSchemaPattern = "")
         {
             Collection<PgView> views = new Collection<PgView>();
 
@@ -35,7 +35,8 @@ namespace MixERP.Net.Utilities.PgDoc.Processors
 
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
-                command.Parameters.AddWithValue("@SchemaName", schemaName);
+				command.Parameters.AddWithValue("@SchemaPattern", schemaPattern);
+				command.Parameters.AddWithValue("@xSchemaPattern", xSchemaPattern);
                 using (DataTable table = DbOperation.GetDataTable(command))
                 {
                     if (table.Rows.Count > 0)
@@ -63,39 +64,5 @@ namespace MixERP.Net.Utilities.PgDoc.Processors
             return views;
         }
 
-        internal static Collection<PgView> GetViews()
-        {
-            Collection<PgView> views = new Collection<PgView>();
-
-            string sql = FileHelper.ReadSqlResource("views.sql");
-
-            using (NpgsqlCommand command = new NpgsqlCommand(sql))
-            {
-                using (DataTable table = DbOperation.GetDataTable(command))
-                {
-                    if (table.Rows.Count > 0)
-                    {
-                        foreach (DataRow row in table.Rows)
-                        {
-                            PgView view = new PgView
-                            {
-                                RowNumber = Conversion.TryCastLong(row["row_number"]),
-                                Name = Conversion.TryCastString(row["object_name"]),
-                                SchemaName = Conversion.TryCastString(row["object_schema"]),
-                                Tablespace = Conversion.TryCastString(row["tablespace"]),
-                                Owner = Conversion.TryCastString(row["owner"]),
-                                Definition = Conversion.TryCastString(row["definition"]),
-                                Description = Conversion.TryCastString(row["description"])
-                            };
-
-
-                            views.Add(view);
-                        }
-                    }
-                }
-            }
-
-            return views;
-        }
     }
 }

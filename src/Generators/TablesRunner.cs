@@ -43,7 +43,7 @@ namespace MixERP.Net.Utilities.PgDoc.Generators
 
         private static void BuildDocumentation(string content, List<string> matches)
         {
-            ICollection<PgTable> tables = TableProcessor.GetTables();
+            ICollection<PgTable> tables = TableProcessor.GetTables(Program.SchemaPattern, Program.xSchemaPattern);
 
             content = content.Replace("[DBName]", Program.Database.ToUpperInvariant());
 

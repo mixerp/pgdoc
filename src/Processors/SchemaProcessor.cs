@@ -27,7 +27,7 @@ namespace MixERP.Net.Utilities.PgDoc.Processors
 {
     internal static class SchemaProcessor
     {
-        internal static Collection<PGSchema> GetSchemas()
+		internal static Collection<PGSchema> GetSchemas(string schemaPattern, string xSchemaPattern)
         {
             Collection<PGSchema> schemas = new Collection<PGSchema>();
 
@@ -35,21 +35,22 @@ namespace MixERP.Net.Utilities.PgDoc.Processors
 
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
-                using (DataTable table = DbOperation.GetDataTable(command))
+				command.Parameters.AddWithValue("@SchemaPattern", schemaPattern);
+				command.Parameters.AddWithValue("@xSchemaPattern", xSchemaPattern);
+
+				using (DataTable table = DbOperation.GetDataTable(command))
                 {
                     if (table.Rows.Count > 0)
                     {
                         foreach (DataRow row in table.Rows)
                         {
-                            PGSchema schema = new PGSchema
-                            {
-                                Name = Conversion.TryCastString(row["namespace"]),
-                                Owner = Conversion.TryCastString(row["owner"]),
-                                Description = Conversion.TryCastString(row["description"])
-                            };
-
-
-                            schemas.Add(schema);
+							PGSchema schema = new PGSchema
+							{
+								Name = Conversion.TryCastString(row["namespace"]),
+								Owner = Conversion.TryCastString(row["owner"]),
+								Description = Conversion.TryCastString(row["description"])
+							};
+							schemas.Add(schema);
                         }
                     }
                 }
@@ -78,7 +79,7 @@ namespace MixERP.Net.Utilities.PgDoc.Processors
                 }
             }
 
-            schema.Tables = TableProcessor.GetTables(schemaName);
+			schema.Tables = TableProcessor.GetTables(schemaName);
             schema.Views = ViewProcessor.GetViews(schemaName);
             schema.Functions = FunctionProcessor.GetFunctions(schemaName);
             schema.TriggerFunctions = TriggerFunctionProcessor.GetTriggerFunctions(schemaName);

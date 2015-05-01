@@ -34,24 +34,15 @@ namespace MixERP.Net.Utilities.PgDoc.Processors
             DbOperation.ExecuteNonQuery(new NpgsqlCommand(sql));
         }
 
-        internal static Collection<PgType> GetTypes(string schemaName)
+		internal static Collection<PgType> GetTypes(string schemaPattern = ".*", string xSchemaPattern = "")
         {
             string sql = FileHelper.ReadSqlResource("types-by-schema.sql");
 
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
-                command.Parameters.AddWithValue("@SchemaName", schemaName);
+				command.Parameters.AddWithValue("@SchemaPattern", schemaPattern);
+				command.Parameters.AddWithValue("@xSchemaPattern", xSchemaPattern);
 
-                return GetTypes(DbOperation.GetDataTable(command));
-            }
-        }
-
-        internal static Collection<PgType> GetTypes()
-        {
-            string sql = FileHelper.ReadSqlResource("types.sql");
-
-            using (NpgsqlCommand command = new NpgsqlCommand(sql))
-            {
                 return GetTypes(DbOperation.GetDataTable(command));
             }
         }

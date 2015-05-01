@@ -45,5 +45,6 @@ AND NOT EXISTS
     AND el.typarray = t.oid
 )
 AND n.nspname != ALL(ARRAY['information_schema', 'pg_catalog', 'pg_toast'])
-AND n.nspname = @SchemaName
-ORDER BY 1, 2;
+AND n.nspname similar to @SchemaPattern
+and n.nspname not similar to @xSchemaPattern
+ORDER BY n.nspname, 1, 2;

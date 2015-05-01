@@ -27,51 +27,16 @@ namespace MixERP.Net.Utilities.PgDoc.Processors
 {
     internal static class TriggerFunctionProcessor
     {
-        internal static Collection<PgFunction> GetTriggerFunctions(string schemaName)
+		internal static Collection<PgFunction> GetTriggerFunctions(string schemaPattern = ".*", string xSchemaPattern = "")
         {
             string sql = FileHelper.ReadSqlResource("trigger-functions-by-schema.sql");
 
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
-                command.Parameters.AddWithValue("@SchemaName", schemaName);
-                return FunctionProcessor.GetFunctions(DbOperation.GetDataTable(command));
+				command.Parameters.AddWithValue("@SchemaPattern", schemaPattern);
+				command.Parameters.AddWithValue("@xSchemaPattern", xSchemaPattern);
+				return FunctionProcessor.GetFunctions(DbOperation.GetDataTable(command));
             }
-        }
-
-        internal static Collection<PgFunction> GetTriggerFunctions()
-        {
-            Collection<PgFunction> triggers = new Collection<PgFunction>();
-
-            string sql = FileHelper.ReadSqlResource("trigger-functions.sql");
-
-            using (NpgsqlCommand command = new NpgsqlCommand(sql))
-            {
-                using (DataTable table = DbOperation.GetDataTable(command))
-                {
-                    if (table.Rows.Count > 0)
-                    {
-                        foreach (DataRow row in table.Rows)
-                        {
-                            PgFunction triggerFunction = new PgFunction
-                            {
-                                RowNumber = Conversion.TryCastLong(row["row_number"]),
-                                FunctionOid = Conversion.TryCastString(row["oid"]),
-                                Name = Conversion.TryCastString(row["function_name"]),
-                                SchemaName = Conversion.TryCastString(row["object_schema"]),
-                                Arguments = Conversion.TryCastString(row["arguments"]),
-                                FunctionType = Conversion.TryCastString(row["function_type"]),
-                                Owner = Conversion.TryCastString(row["owner"]),
-                                Description = Conversion.TryCastString(row["description"])
-                            };
-
-
-                            triggers.Add(triggerFunction);
-                        }
-                    }
-                }
-            }
-
-            return triggers;
         }
     }
 }
